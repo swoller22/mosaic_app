@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 public class SignInPage extends AppCompatActivity {
     private UserDB database;
-    Integer hi;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
