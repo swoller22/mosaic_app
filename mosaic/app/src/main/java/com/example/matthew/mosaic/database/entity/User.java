@@ -7,13 +7,13 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    public int uid;
 
-    @ColumnInfo(name = "user_name")
-    private String username;
+    @ColumnInfo(name = "username")
+    public String username;
 
     @ColumnInfo(name = "password")
-    private String password;
+    public String password;
 
 
     public int getUid() {
