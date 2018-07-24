@@ -27,7 +27,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.input_username)
     EditText _userText;
-    @BindView(R.id.input_password) EditText _passwordText;
+    @BindView(R.id.input_password)
+    EditText _passwordText;
     @BindView(R.id.btn_login)
     Button _loginButton;
     @BindView(R.id.link_signup)
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = _userText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        // TODO: Lookup user in database, reject if unknown user or invalid password
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 2000);
     }
 
 
@@ -152,8 +153,8 @@ public class LoginActivity extends AppCompatActivity {
             _userText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 20) {
+            _passwordText.setError("Password must be between 4 and 20 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);
