@@ -131,6 +131,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        Log.d(TAG, "Moving to BaseImageActivity");
+        Intent intent = new Intent (this, BaseImageActivity.class);
+        startActivity(intent);
         finish();
     }
 

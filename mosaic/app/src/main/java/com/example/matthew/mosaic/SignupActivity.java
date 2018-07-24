@@ -87,7 +87,10 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
+        Log.d(TAG, "Signing up user");
         setResult(RESULT_OK, null);
+        Intent intent = new Intent (this, BaseImageActivity.class);
+        startActivity(intent);
         finish();
     }
 
