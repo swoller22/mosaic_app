@@ -4,13 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".BaseImageActivity">
 
-
-    <ImageView
-        android:id="@+id/imageView3"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/purple_counter" />
+        android:id="@+id/getImageBtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select or Capture Image" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/baseImage"/>
+
 </LinearLayout>
