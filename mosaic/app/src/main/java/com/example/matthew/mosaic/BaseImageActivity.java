@@ -28,6 +28,7 @@ public class BaseImageActivity extends AppCompatActivity {
     private ImageView baseImage;
     private int GALLERY = 1;
     private static final String IMAGE_DIRECTORY = "/Download";
+    private Bitmap baseImageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class BaseImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 chooseImage();
+                beginImageProcessing();
             }
         });
     }
@@ -65,9 +67,9 @@ public class BaseImageActivity extends AppCompatActivity {
             if (data != null) {
                 Uri contentURI = data.getData();
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    baseImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     Toast.makeText(BaseImageActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                    baseImage.setImageBitmap(bitmap);
+                    baseImage.setImageBitmap(baseImageBitmap);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -75,5 +77,9 @@ public class BaseImageActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void beginImageProcessing() {
+        
     }
 }
