@@ -27,6 +27,7 @@ public class BaseImageActivity extends AppCompatActivity {
     private Button getImageBtn;
     private ImageView baseImage;
     private int GALLERY = 1;
+    private static final String IMAGE_DIRECTORY = "/Download";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,14 @@ public class BaseImageActivity extends AppCompatActivity {
     public void chooseImage(){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
+        Log.d("TAG", "Starting gallery activity!");
         startActivityForResult(galleryIntent, GALLERY);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d("TAG", "Made it back!");
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == this.RESULT_CANCELED) {
