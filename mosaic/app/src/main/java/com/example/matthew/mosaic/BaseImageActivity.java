@@ -42,7 +42,6 @@ public class BaseImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 chooseImage();
-                beginImageProcessing();
             }
         });
     }
@@ -77,9 +76,30 @@ public class BaseImageActivity extends AppCompatActivity {
                 }
             }
         }
+        beginImageProcessing();
     }
 
     public void beginImageProcessing() {
-        
+
+        int baseImageBitmapWidth = baseImageBitmap.getWidth();
+        int baseImageBitmapHeight = baseImageBitmap.getHeight();
+        int[] baseImagePixels = new int[baseImageBitmapWidth*baseImageBitmapHeight];
+
+        baseImageBitmap.getPixels(baseImagePixels, 0, baseImageBitmapWidth, 0, 0,
+                baseImageBitmapWidth, baseImageBitmapHeight);
+
+
+        int R,G,B,Y;
+
+        for(int y = 0; y < baseImageBitmapHeight; y++) {
+            for(int x = 0; x < baseImageBitmapWidth; x++) {
+                int index = y * baseImageBitmapWidth + x;
+                R = (baseImagePixels[index] >> 16) & 0xff;     //bitwise shifting
+                G = (baseImagePixels[index] >> 8) & 0xff;
+                B = baseImagePixels[index] & 0xff;
+                baseImagePixels[index] = 0x00000000 | (R << 16) | (G << 8) | B;
+            }
+        }
+        Log.d("first pixel value: ", String.valueOf(baseImagePixels[105800]));
     }
 }
