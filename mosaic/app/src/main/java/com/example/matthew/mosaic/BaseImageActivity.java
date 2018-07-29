@@ -1,6 +1,7 @@
 package com.example.matthew.mosaic;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
@@ -25,10 +26,13 @@ import java.util.Calendar;
 public class BaseImageActivity extends AppCompatActivity {
 
     private Button getImageBtn;
+    private Button getLittleImagesBtn;
     private ImageView baseImage;
-    private int GALLERY = 1;
+    private int IMAGE_SELECTOR = 0;
+    private int LITTLE_IMAGES_SELECTOR = 1;
     private static final String IMAGE_DIRECTORY = "/Download";
     private Bitmap baseImageBitmap;
+    private static final int PICKFILE_REQUEST_CODE = 8778;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class BaseImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base_image);
 
         getImageBtn = (Button)findViewById(R.id.getImageBtn);
+        getLittleImagesBtn = (Button)findViewById(R.id.getLittleImagesBtn);
         baseImage = (ImageView)findViewById(R.id.baseImage);
 
         getImageBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,13 +49,13 @@ public class BaseImageActivity extends AppCompatActivity {
                 chooseImage();
             }
         });
-    }
 
-    public void chooseImage(){
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Log.d("TAG", "Starting gallery activity!");
-        startActivityForResult(galleryIntent, GALLERY);
+        getLittleImagesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseLittleImages();
+            }
+        });
     }
 
     @Override
@@ -62,12 +67,11 @@ public class BaseImageActivity extends AppCompatActivity {
         if (resultCode == this.RESULT_CANCELED) {
             return;
         }
-        if (requestCode == GALLERY) {
+        if (requestCode == IMAGE_SELECTOR) {
             if (data != null) {
                 Uri contentURI = data.getData();
                 try {
                     baseImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    Toast.makeText(BaseImageActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     baseImage.setImageBitmap(baseImageBitmap);
 
                 } catch (IOException e) {
@@ -75,12 +79,18 @@ public class BaseImageActivity extends AppCompatActivity {
                     Toast.makeText(BaseImageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
+            beginImageProcessing();
         }
-        beginImageProcessing();
+        else if(requestCode == LITTLE_IMAGES_SELECTOR) {
+            int count = data.getClipData().getItemCount();
+            Log.d("Little Images Data:", ""+count);
+        }
     }
 
     public void beginImageProcessing() {
 
+/*
+        int littleImageSize = 10;
         int baseImageBitmapWidth = baseImageBitmap.getWidth();
         int baseImageBitmapHeight = baseImageBitmap.getHeight();
         int[] baseImagePixels = new int[baseImageBitmapWidth*baseImageBitmapHeight];
@@ -89,7 +99,7 @@ public class BaseImageActivity extends AppCompatActivity {
                 baseImageBitmapWidth, baseImageBitmapHeight);
 
 
-        int R,G,B,Y;
+        int R,G,B;
 
         for(int y = 0; y < baseImageBitmapHeight; y++) {
             for(int x = 0; x < baseImageBitmapWidth; x++) {
@@ -97,9 +107,28 @@ public class BaseImageActivity extends AppCompatActivity {
                 R = (baseImagePixels[index] >> 16) & 0xff;     //bitwise shifting
                 G = (baseImagePixels[index] >> 8) & 0xff;
                 B = baseImagePixels[index] & 0xff;
-                baseImagePixels[index] = 0x00000000 | (R << 16) | (G << 8) | B;
+                baseImagePixels[index] = (R << 16) | (G << 8) | B;
             }
         }
         Log.d("first pixel value: ", String.valueOf(baseImagePixels[105800]));
+        */
     }
+
+
+    public void chooseImage(){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Log.d("TAG", "Starting gallery activity!");
+        startActivityForResult(galleryIntent, IMAGE_SELECTOR);
+    }
+
+    public void chooseLittleImages() {
+        Intent folderSelectorIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        folderSelectorIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        Log.d("TAG", "Starting little images selector selector activity!");
+        startActivityForResult(folderSelectorIntent, LITTLE_IMAGES_SELECTOR);
+    }
+
 }
+

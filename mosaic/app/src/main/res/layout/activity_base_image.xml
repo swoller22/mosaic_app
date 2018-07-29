@@ -25,4 +25,14 @@
         android:src="@mipmap/ic_launcher"
         android:id="@+id/baseImage"/>
 
+    <Button
+        android:id="@+id/getLittleImagesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:onClick="get"
+        android:text="Get the Little Images!"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </LinearLayout>
