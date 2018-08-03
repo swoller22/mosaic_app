@@ -83,7 +83,15 @@ public class BaseImageActivity extends AppCompatActivity {
         }
         else if(requestCode == LITTLE_IMAGES_SELECTOR) {
             int count = data.getClipData().getItemCount();
-            Log.d("Little Images Data:", ""+count);
+            for(int i = 0; i < count; i++) {
+                Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                try {
+                    Bitmap miniBitmap =  MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    baseImage.setImageBitmap(miniBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -130,5 +138,8 @@ public class BaseImageActivity extends AppCompatActivity {
         startActivityForResult(folderSelectorIntent, LITTLE_IMAGES_SELECTOR);
     }
 
+    public void getAverageRGBValueOfImage(){
+
+    }
 }
 
