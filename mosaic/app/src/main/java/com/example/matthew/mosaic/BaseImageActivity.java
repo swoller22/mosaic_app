@@ -30,9 +30,7 @@ public class BaseImageActivity extends AppCompatActivity {
     private ImageView baseImage;
     private int IMAGE_SELECTOR = 0;
     private int LITTLE_IMAGES_SELECTOR = 1;
-    private static final String IMAGE_DIRECTORY = "/Download";
     private Bitmap baseImageBitmap;
-    private static final int PICKFILE_REQUEST_CODE = 8778;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,41 +77,20 @@ public class BaseImageActivity extends AppCompatActivity {
                     Toast.makeText(BaseImageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
-            beginImageProcessing();
         }
         else if(requestCode == LITTLE_IMAGES_SELECTOR) {
             int count = data.getClipData().getItemCount();
-            Log.d("Little Images Data:", ""+count);
-        }
-    }
-
-    public void beginImageProcessing() {
-
-/*
-        int littleImageSize = 10;
-        int baseImageBitmapWidth = baseImageBitmap.getWidth();
-        int baseImageBitmapHeight = baseImageBitmap.getHeight();
-        int[] baseImagePixels = new int[baseImageBitmapWidth*baseImageBitmapHeight];
-
-        baseImageBitmap.getPixels(baseImagePixels, 0, baseImageBitmapWidth, 0, 0,
-                baseImageBitmapWidth, baseImageBitmapHeight);
-
-
-        int R,G,B;
-
-        for(int y = 0; y < baseImageBitmapHeight; y++) {
-            for(int x = 0; x < baseImageBitmapWidth; x++) {
-                int index = y * baseImageBitmapWidth + x;
-                R = (baseImagePixels[index] >> 16) & 0xff;     //bitwise shifting
-                G = (baseImagePixels[index] >> 8) & 0xff;
-                B = baseImagePixels[index] & 0xff;
-                baseImagePixels[index] = (R << 16) | (G << 8) | B;
+            for(int i = 0; i < count; i++) {
+                Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                try {
+                    Bitmap miniBitmap =  MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    Log.d("RGBVal", "onActivityResult: "+miniBitmap.getPixel(300,300));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        Log.d("first pixel value: ", String.valueOf(baseImagePixels[105800]));
-        */
     }
-
 
     public void chooseImage(){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -123,12 +100,36 @@ public class BaseImageActivity extends AppCompatActivity {
     }
 
     public void chooseLittleImages() {
-        Intent folderSelectorIntent = new Intent(Intent.ACTION_PICK,
+        Intent littleImageSelectorIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        folderSelectorIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        littleImageSelectorIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         Log.d("TAG", "Starting little images selector selector activity!");
-        startActivityForResult(folderSelectorIntent, LITTLE_IMAGES_SELECTOR);
+        startActivityForResult(littleImageSelectorIntent, LITTLE_IMAGES_SELECTOR);
     }
 
+    public int[] getAverageRGBValueOfImage(Bitmap imageBitmap){
+        int baseImageBitmapWidth = imageBitmap.getWidth();
+        int baseImageBitmapHeight = imageBitmap.getHeight();
+        int[] baseImagePixels = new int[baseImageBitmapWidth*baseImageBitmapHeight];
+        int R = 0,G = 0,B = 0;
+        int R_average = 0, G_average = 0, B_average = 0;
+        int cnt = 0;
+
+        for(int y = 0; y < baseImageBitmapHeight; y++) {
+            for(int x = 0; x < baseImageBitmapWidth; x++) {
+                int index = y * baseImageBitmapWidth + x;
+                R = (baseImagePixels[index] >> 16) & 0xff;     //bitwise shifting
+                G = (baseImagePixels[index] >> 8) & 0xff;
+                B = baseImagePixels[index] & 0xff;
+
+                Log.d("Average R, G, B: ", ""+R);
+                R_average = R_average + R;
+                G_average += G;
+                B_average += B;
+                cnt++;
+            }
+        }
+        return new int[] {R_average, G_average, B_average};
+    }
 }
 
