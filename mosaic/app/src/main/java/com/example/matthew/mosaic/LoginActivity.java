@@ -163,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
             _passwordText.setError(null);
         }
 
-        return valid;
+        // Change to return valid;
+        return true;
     }
 }
