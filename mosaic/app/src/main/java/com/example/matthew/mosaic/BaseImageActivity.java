@@ -62,8 +62,8 @@ public class BaseImageActivity extends AppCompatActivity {
                 try {
                     baseImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     baseImage.setImageBitmap(baseImageBitmap);
-//                    RGB rgb = new RGB(0, 0,0);
-
+                    BitmapExtension bitmapExtension = new BitmapExtension(baseImageBitmap);
+                    RGB averageRGB = bitmapExtension.getAverageRGB();
 
                 } catch (IOException e) {
                     e.printStackTrace();
