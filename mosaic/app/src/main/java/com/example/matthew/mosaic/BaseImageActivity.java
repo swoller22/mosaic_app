@@ -1,27 +1,18 @@
 package com.example.matthew.mosaic;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
 
 public class BaseImageActivity extends AppCompatActivity {
 
@@ -73,6 +64,8 @@ public class BaseImageActivity extends AppCompatActivity {
                 try {
                     baseImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     baseImage.setImageBitmap(baseImageBitmap);
+//                    RGB rgb = new RGB(0, 0,0);
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -123,12 +116,12 @@ public class BaseImageActivity extends AppCompatActivity {
     }
 
     public void chooseLittleImages() {
-        Intent folderSelectorIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    Intent folderSelectorIntent = new Intent(Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         folderSelectorIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         Log.d("TAG", "Starting little images selector selector activity!");
-        startActivityForResult(folderSelectorIntent, LITTLE_IMAGES_SELECTOR);
-    }
+    startActivityForResult(folderSelectorIntent, LITTLE_IMAGES_SELECTOR);
+}
 
 }
 
