@@ -7,15 +7,24 @@
     <color name="primary_dark">#E12929</color>
     <color name="primary_darker">#CC1D1D</color>
     <color name="coral">#EB5252</color>
+    <color name="coralRed">#FF5256</color>
     <color name="accent">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="seaGreen">#2E8B57</color>
     <color name="darkSlateGray">#2F4F4F</color>
+    <color name="oldNavy">#2f364a</color>
+    <color name="oldNavyDark">#262b3b</color>
     <color name="jet">#222222</color>
+    <color name="indigo">#0D4F8B</color>
     <color name="oil">#333333</color>
     <color name="monsoon">#777777</color>
     <color name="jumbo">#888888</color>
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
+    <color name="offWhite">#FAFAFA</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparentWhite">#1AFFFFFF</color>
+    <color name="slightlyTransparentWhite">#33FFFFFF</color>
+    <color name="lessTransparentWhite">#59FFFFFF</color>
 </resources>
