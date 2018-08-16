@@ -12,6 +12,7 @@
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
+        android:gravity="center_horizontal"
         android:focusable="true" android:focusableInTouchMode="true">
 
         <!-- App Title -->
@@ -19,12 +20,12 @@
             android:id="@+id/mosaic_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="70dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="MOSAIC"
             android:textColor="@color/white"
-            android:textSize="35sp"
-            android:gravity="center"/>
+            android:textSize="35sp" />
 
         <!-- Username Label -->
         <android.support.design.widget.TextInputLayout
@@ -54,15 +55,16 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="178dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
             android:alpha="0.80"
-            android:textColor="@color/darkSlateGray"
+            android:padding="12dp"
             android:text="Login"
-            android:textSize="18sp"/>
+            android:textColor="@color/oldNavyDark"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"/>
 
         <TextView android:id="@+id/link_signup"
             android:layout_width="fill_parent"
